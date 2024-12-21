@@ -97,7 +97,7 @@ max-comments-pro-user: 1-2
 # comment-percentage: 30-40
 # pm-percentage: 30-40
 interact-percentage: 30-40
-follow-percentage: 30-40
+follow-percentage: 100
 follow-limit: 50
 skipped-list-limit: 10-15
 skipped-posts-limit: 5

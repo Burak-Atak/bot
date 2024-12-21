@@ -876,6 +876,7 @@ def _follow(device, username, follow_percentage, args, session_state, swipe_amou
             clickable=True,
             textMatches=case_insensitive_re(FOLLOWBACK_REGEX),
         )
+        REQUEST_IS_PENDING_REGEX = "^Your request is pending$"
 
         if followback_button.exists():
             logger.info(
@@ -900,7 +901,18 @@ def _follow(device, username, follow_percentage, args, session_state, swipe_amou
                     universal_actions.detect_block(device)
                     return True
                 else:
-                    if n < max_tries - 1:
+                    your_request_is_pending = e = device.find(
+                        textMatches=REQUEST_IS_PENDING_REGEX)
+                    if your_request_is_pending.exists():
+                        logger.warning(
+                            f"Clicked Follow button for @{username} but showed 'Your request is pending' pop up.")
+                        ok_button = device.find(
+                            clickable=True,
+                            textMatches="^OK$",
+                        )
+                        ok_button.click()
+                        return
+                    elif n < max_tries - 1:
                         logger.debug(
                             "Looks like the click on the button didn't work, try again."
                         )

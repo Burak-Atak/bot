@@ -13,25 +13,25 @@ skip_business: true
 skip_non_business: false
 skip_following: true
 skip_follower: true
-skip_if_link_in_bio: true
+skip_if_link_in_bio: false
 follow_private_or_empty: false
 
 ## Filters on profile stats
-min_followers: 50
-max_followers: 2500
-min_followings: 50
-max_followings: 2500
-min_potency_ratio: 0.5
-max_potency_ratio: 5
-min_posts: 3
+min_followers: 0
+# max_followers: 2500
+min_followings: 0
+# max_followings: 2500
+min_potency_ratio: 0
+max_potency_ratio: 999
+min_posts: 0
 mutual_friends: -1 # -1 for ignore that filter
 
 ## Filters on biography and name
-blacklist_words: [sex, link,]
-mandatory_words: [cat, dogs,]
-specific_alphabet: [LATIN, GREEK]
-biography_language: [it, en]
-biography_banned_language: [es, ch]
+blacklist_words: []
+mandatory_words: []
+# specific_alphabet: []
+# biography_language: []
+# biography_banned_language: []
 
 ## Filters for enabling comments
 # Action specific
