@@ -184,6 +184,7 @@ def start_bot(**kwargs):
             check_if_english(device)
             if configs.args.username is not None:
                 success = account_view.changeToUsername(configs.args.username)
+                account_view.navigate_to_main_account()
                 if not success:
                     logger.error(
                         f"Not able to change to {configs.args.username}, abort!"

@@ -1106,20 +1106,12 @@ class AccountView:
             selector = self.device.find(resourceId=ResourceID.ACTION_BAR_TITLE_CHEVRON)
             selector.click()
             if self._find_username(username):
-                if action_bar is not None:
-                    current_profile_name = action_bar.get_text()
-                    if current_profile_name.strip().upper() == username.upper():
-                        return True
-                else:
-                    logger.error(
-                        "Cannot find action bar (where you select your account)!"
-                    )
+                return True
         return False
 
     def _find_username(self, username, has_scrolled=False):
         list_view = self.device.find(resourceId=ResourceID.LIST)
         username_obj = self.device.find(
-            resourceIdMatches=f"{ResourceID.ROW_USER_TEXTVIEW}|{ResourceID.USERNAME_TEXTVIEW}",
             textMatches=case_insensitive_re(username),
         )
         if username_obj.exists(Timeout.SHORT):
