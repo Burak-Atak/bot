@@ -877,6 +877,7 @@ def _follow(device, username, follow_percentage, args, session_state, swipe_amou
             textMatches=case_insensitive_re(FOLLOWBACK_REGEX),
         )
         REQUEST_IS_PENDING_REGEX = "^Your request is pending$"
+        REVIEW_THIS_ACCOUNT_BEFORE_FOLLOWING_REGEX = "^Review this account before following$"
 
         if followback_button.exists():
             logger.info(
@@ -901,7 +902,22 @@ def _follow(device, username, follow_percentage, args, session_state, swipe_amou
                     universal_actions.detect_block(device)
                     return True
                 else:
-                    your_request_is_pending = e = device.find(
+                    review_this_account_before_following = device.find(
+                        textMatches=REVIEW_THIS_ACCOUNT_BEFORE_FOLLOWING_REGEX)
+                    if review_this_account_before_following.exists():
+                        follow_button = device.find(
+                            clickable=True,
+                            description="Follow"
+                        )
+                        follow_button.click()
+                        if device.find(
+                            textMatches=UNFOLLOW_REGEX,
+                            clickable=True,
+                        ).exists(Timeout.SHORT):
+                            logger.info(f"Followed @{username}", extra={"color": Fore.GREEN})
+                            universal_actions.detect_block(device)
+                            return True
+                    your_request_is_pending = device.find(
                         textMatches=REQUEST_IS_PENDING_REGEX)
                     if your_request_is_pending.exists():
                         logger.warning(
